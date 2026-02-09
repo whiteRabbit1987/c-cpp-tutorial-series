@@ -1,0 +1,5 @@
+C makes it easy to shoot yourself in the foot; C++ makes it harder, but when you do, it blows your whole leg off.
+Premature optimization is the root of all evil.
+The world doesn't need another game engine. It needs better games.
+Focus on the simplest thing that could possibly work.
+Software is like sex: it’s better when it’s free.
