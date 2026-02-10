@@ -18,7 +18,13 @@ int main(){
     // y = cos(y);
     // y = tan(y);
 
-    printf("%f\n", y);
+    for(int i = 0; i < 20; i++){
+        int power = pow(i, 2);
+        float root = sqrt(i);
+
+        printf("%d squared is %d.", i, power);
+        printf("\nThe square root of %d is %.2f\n\n", i, root);
+    }
     
     return 0;
 }
