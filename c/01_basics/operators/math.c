@@ -25,6 +25,13 @@ int main(){
         printf("%d squared is %d.", i, power);
         printf("\nThe square root of %d is %.2f\n\n", i, root);
     }
+
+    int number = 2;
+
+    for(int i = 2; i <= 16; i++){
+        int power = pow(number, i);
+        printf("%d to the power of %d is: %d.\n", number, i, power);
+    }
     
     return 0;
 }
