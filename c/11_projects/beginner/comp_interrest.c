@@ -19,7 +19,7 @@ int main(){
     scanf("%lf", &rate);
     rate = rate / 100;
 
-    printf("Enter the # of years (T): ");
+    printf("Enter the # of years (t): ");
     scanf("%d", &years);
 
     printf("Enter # of times compounded per year (n): ");
