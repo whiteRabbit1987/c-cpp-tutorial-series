@@ -21,6 +21,16 @@ struct Coordinate {
 //                  Cleaner and avoids ordering mistakes
 struct Coordinate new_coord(int x, int y, int z) {
 
+    // alternativley the code below could be changed to:
+    /*
+    struct Coordinate c = {
+        .x = x,
+        .y = y,
+        .z = z
+    };
+    return c;
+    */
+
     return (struct Coordinate){
         .x = x,
         .y = y,

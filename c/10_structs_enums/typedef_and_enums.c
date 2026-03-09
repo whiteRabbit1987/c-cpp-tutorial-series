@@ -3,7 +3,7 @@
 typedef struct {
     char name[12];
     int score;
-} Player;
+} Player; // convetnion is player_t
 
 enum Day {Sun = 1, Mon, Tue, Wed, Thu, Fri, Sat};
 

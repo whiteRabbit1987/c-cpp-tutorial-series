@@ -19,6 +19,8 @@ namespace second{
 }
 
 int main(){
+  // do not use line below (polutes program with names and  will cause conflict sooner or  later)
+  // using namespace std;
   using std::cout;
   int x = 0;
   

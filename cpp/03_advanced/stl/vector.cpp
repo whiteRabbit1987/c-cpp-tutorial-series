@@ -1,6 +1,27 @@
 #include <iostream>
 #include <vector>
 
+
+using FVector = std::vector<std::pair<float, float>>;
+// typedef std::vector<std::pair<float, float>> FVector;
+
+int main(){
+
+	FVector MyVector = {
+		{2.0f, 5.0f}
+	};
+
+	for(const auto& mv : MyVector){
+		std::cout << "(" << mv.first << ", " << mv.second << ")" << std::endl;
+	}
+
+	return 0;
+}
+
+/*
+#include <iostream>
+#include <vector>
+
 using namespace std;
 
 // vector basics = dynamic array container from the C++ Standard Library
@@ -59,3 +80,7 @@ int main(void) {
 
     return 0;
 }
+
+*/
+
+
