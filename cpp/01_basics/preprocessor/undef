@@ -1,0 +1,18 @@
+#include <iostream>
+
+#define VERSION 1
+
+int main(){
+
+    //#undef  =  removes a previously defined macro
+
+    std::cout << "VERSION was defined before undef" << std::endl;
+
+    #undef VERSION
+
+    #ifndef VERSION
+        std::cout << "VERSION is now undefined" << std::endl;
+    #endif
+
+    return 0;
+}
