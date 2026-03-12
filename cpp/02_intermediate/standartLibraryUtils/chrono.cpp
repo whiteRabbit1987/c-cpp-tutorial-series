@@ -20,7 +20,7 @@ int main(){
 
     auto end = std::chrono::system_clock::now();     // record time after input
 
-    std::chrono::duration<double> elapsed = end - start; // compute elapsed time
+    std::chrono::duration<double> elapsed = end - start; // operator- is overloaded for time_point objects → returns a duration
 
     cout << "Reaction time: " << elapsed.count() << "s\n\n";
 
