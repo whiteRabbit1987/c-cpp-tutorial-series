@@ -18,7 +18,10 @@ int main(){
     string input;
     cin >> input;                                    // wait for user input
 
-    auto end = std::chrono::system_clock::now();     // record time after input
+    auto end = std::chrono::system_clock::now();
+// scope resolution operator ::   =   used because system_clock::now() is static (no object needed)
+// dot operator .                 =   only used when calling members on an instance
+
 
     std::chrono::duration<double> elapsed = end - start; // operator- is overloaded for time_point objects → returns a duration
 
