@@ -19,7 +19,6 @@ public:
     // allows calling this on const Player objects
     void display() const {
         std::cout << "Player: " << name << " | HP: " << health << "\n";
-        // name = "X";   // ❌ error: cannot modify inside const function
     }
 
     // getter should be const because it does not modify the object
@@ -40,32 +39,27 @@ private:
 int main() {
     // const variable
     const int maxHP = 100;
-    // maxHP = 50; // ❌ error
 
     // const reference → cannot modify through ref
     int value = 10;
     const int& ref = value;
-    // ref = 20; // ❌ error
 
     // const pointer to non-const data
     int x = 5;
     int* const ptr = &x; // pointer cannot change, value can
-    *ptr = 20;           // ✔ allowed
-    // ptr = &maxHP;     // ❌ pointer is const
+    *ptr = 20;           // allowed
 
     // pointer to const data
     const int* p2 = &x;  // data cannot change, pointer can
-    // *p2 = 30;         // ❌ cannot modify through pointer
-    p2 = &maxHP;         // ✔ pointer can change
+    p2 = &maxHP;         // allowed: pointer can change
 
     // const object → can only call const member functions
     const Player p("Arthur", 80);
-    p.display();         // ✔ allowed (display() is const)
-    // p.setHealth(50);  // ❌ error: cannot call non-const function
+    p.display();         // allowed
 
-    Player p2("Lancelot", 90);
-    p2.setHealth(95);    // ✔ allowed
-    p2.display();
+    Player p2b("Lancelot", 90);
+    p2b.setHealth(95);   // allowed
+    p2b.display();
 
     return 0;
 }
