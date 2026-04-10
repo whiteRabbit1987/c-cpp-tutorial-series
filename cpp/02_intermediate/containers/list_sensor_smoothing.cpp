@@ -43,6 +43,31 @@ void SensorData::smoth_data(){
             *next = current;
         }
     }
+
+    // this might be easier to read
+    /*
+    // Go through the list and replace any spike or dip with the previous reading
+    void smooth_data()
+    {
+        if(readings.size() < 2)
+        {
+            return;
+        }
+        auto prev = readings.begin();
+        auto current = prev;
+        ++current;
+
+        while(current != readings.end())
+        {
+            if(*current >= 2 * (*prev) || *current <= 0.5 * (*prev))
+            {
+                *current = *prev;
+            }
+            ++prev;
+            ++current;
+        }
+    }
+    */
 };
 
 void SensorData::print_data(){
