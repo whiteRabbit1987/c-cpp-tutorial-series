@@ -1,0 +1,10 @@
+^C:\USERS\DAVID\ONEDRIVE - DEL MAR COLLEGE\CODING\CANDCPP\CPP\07_TOOLS\CMAKE\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/david/OneDrive - Del Mar College/Coding/CandCPP/cpp/07_tools/cmake" "-BC:/Users/david/OneDrive - Del Mar College/Coding/CandCPP/cpp/07_tools/cmake/build" --check-stamp-file "C:/Users/david/OneDrive - Del Mar College/Coding/CandCPP/cpp/07_tools/cmake/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
