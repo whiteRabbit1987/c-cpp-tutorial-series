@@ -1,33 +1,59 @@
-// bridge_intro.cpp
+// bridge_overview.cpp
 // Structural Pattern: Bridge
-// Purpose: Decouple an abstraction from its implementation so both can vary independently.
-// When to use: When you have exploding class hierarchies or want to separate WHAT you do from HOW you do it.
+// This file demonstrates:
+// 1. The problem: exploding class hierarchies
+// 2. The Bridge solution: separate abstraction from implementation
+// 3. Implementor hierarchy
+// 4. Abstraction hierarchy
+// 5. Why Bridge is useful in real systems
 
 #include <iostream>
 
-// Implementation interface (the "Implementor")
+// ------------------------------------------------------------
+// 1. The problem: exploding class hierarchies
+// ------------------------------------------------------------
+// Without Bridge, you might create classes like:
+//   RasterCircle, VectorCircle, RasterSquare, VectorSquare, ...
+// This grows exponentially as shapes and renderers increase.
+
+// ------------------------------------------------------------
+// 2. Implementor interface
+// ------------------------------------------------------------
 class Renderer {
 public:
     virtual void renderCircle(float x, float y, float radius) = 0;
+    virtual void renderSquare(float x, float y, float size) = 0;
     virtual ~Renderer() = default;
 };
 
-// Concrete Implementations
+// ------------------------------------------------------------
+// 3. Concrete Implementors
+// ------------------------------------------------------------
 class RasterRenderer : public Renderer {
 public:
     void renderCircle(float x, float y, float radius) override {
-        std::cout << "Rasterizing circle at (" << x << ", " << y << ") radius " << radius << "\n";
+        std::cout << "[Raster] Circle at (" << x << ", " << y << ") radius " << radius << "\n";
+    }
+
+    void renderSquare(float x, float y, float size) override {
+        std::cout << "[Raster] Square at (" << x << ", " << y << ") size " << size << "\n";
     }
 };
 
 class VectorRenderer : public Renderer {
 public:
     void renderCircle(float x, float y, float radius) override {
-        std::cout << "Drawing vector circle at (" << x << ", " << y << ") radius " << radius << "\n";
+        std::cout << "[Vector] Circle at (" << x << ", " << y << ") radius " << radius << "\n";
+    }
+
+    void renderSquare(float x, float y, float size) override {
+        std::cout << "[Vector] Square at (" << x << ", " << y << ") size " << size << "\n";
     }
 };
 
-// Abstraction
+// ------------------------------------------------------------
+// 4. Abstraction hierarchy
+// ------------------------------------------------------------
 class Shape {
 protected:
     Renderer& renderer;
@@ -37,7 +63,6 @@ public:
     virtual ~Shape() = default;
 };
 
-// Refined Abstraction
 class Circle : public Shape {
 private:
     float x, y, radius;
@@ -50,15 +75,39 @@ public:
     }
 };
 
+class Square : public Shape {
+private:
+    float x, y, size;
+public:
+    Square(Renderer& r, float x, float y, float size)
+        : Shape(r), x(x), y(y), size(size) {}
+
+    void draw() override {
+        renderer.renderSquare(x, y, size);
+    }
+};
+
+// ------------------------------------------------------------
+// 5. Why Bridge matters (practical notes)
+// ------------------------------------------------------------
+// - Avoids class explosion
+// - Lets you mix and match abstractions and implementations
+// - Useful for graphics APIs, drivers, UI toolkits, OS abstraction layers
+// - Lets you change implementation at runtime
+// - Keeps code flexible and maintainable
+
+// ------------------------------------------------------------
+// 6. Example usage
+// ------------------------------------------------------------
 int main() {
     RasterRenderer raster;
     VectorRenderer vector;
 
-    Circle c1(raster, 10, 10, 5);
-    Circle c2(vector, 20, 20, 10);
+    Circle c1(raster, 5, 5, 2);
+    Square s1(vector, 10, 10, 4);
 
     c1.draw();
-    c2.draw();
+    s1.draw();
 
     return 0;
 }

@@ -1,42 +1,39 @@
 // bridge_overview.cpp
-// Structural Pattern: Bridge
+// Bridge Pattern — Extensive Overview
 // This file demonstrates:
-// 1. The problem: exploding class hierarchies
-// 2. The Bridge solution: separate abstraction from implementation
-// 3. Implementor hierarchy
-// 4. Abstraction hierarchy
-// 5. Why Bridge is useful in real systems
+// - The problem of exploding class hierarchies
+// - Full abstraction hierarchy
+// - Full implementation hierarchy
+// - Multiple shapes
+// - Multiple renderers
+// - Runtime switching of implementations
+// - Why Bridge is used in real systems
 
 #include <iostream>
+#include <memory>
 
 // ------------------------------------------------------------
-// 1. The problem: exploding class hierarchies
-// ------------------------------------------------------------
-// Without Bridge, you might create classes like:
-//   RasterCircle, VectorCircle, RasterSquare, VectorSquare, ...
-// This grows exponentially as shapes and renderers increase.
-
-// ------------------------------------------------------------
-// 2. Implementor interface
+// IMPLEMENTATION HIERARCHY (Implementor)
 // ------------------------------------------------------------
 class Renderer {
 public:
     virtual void renderCircle(float x, float y, float radius) = 0;
     virtual void renderSquare(float x, float y, float size) = 0;
+    virtual void renderTriangle(float x, float y, float base, float height) = 0;
     virtual ~Renderer() = default;
 };
 
-// ------------------------------------------------------------
-// 3. Concrete Implementors
-// ------------------------------------------------------------
 class RasterRenderer : public Renderer {
 public:
     void renderCircle(float x, float y, float radius) override {
         std::cout << "[Raster] Circle at (" << x << ", " << y << ") radius " << radius << "\n";
     }
-
     void renderSquare(float x, float y, float size) override {
         std::cout << "[Raster] Square at (" << x << ", " << y << ") size " << size << "\n";
+    }
+    void renderTriangle(float x, float y, float base, float height) override {
+        std::cout << "[Raster] Triangle at (" << x << ", " << y << ") base " << base
+                  << " height " << height << "\n";
     }
 };
 
@@ -45,14 +42,17 @@ public:
     void renderCircle(float x, float y, float radius) override {
         std::cout << "[Vector] Circle at (" << x << ", " << y << ") radius " << radius << "\n";
     }
-
     void renderSquare(float x, float y, float size) override {
         std::cout << "[Vector] Square at (" << x << ", " << y << ") size " << size << "\n";
+    }
+    void renderTriangle(float x, float y, float base, float height) override {
+        std::cout << "[Vector] Triangle at (" << x << ", " << y << ") base " << base
+                  << " height " << height << "\n";
     }
 };
 
 // ------------------------------------------------------------
-// 4. Abstraction hierarchy
+// ABSTRACTION HIERARCHY (Abstraction)
 // ------------------------------------------------------------
 class Shape {
 protected:
@@ -87,27 +87,46 @@ public:
     }
 };
 
-// ------------------------------------------------------------
-// 5. Why Bridge matters (practical notes)
-// ------------------------------------------------------------
-// - Avoids class explosion
-// - Lets you mix and match abstractions and implementations
-// - Useful for graphics APIs, drivers, UI toolkits, OS abstraction layers
-// - Lets you change implementation at runtime
-// - Keeps code flexible and maintainable
+class Triangle : public Shape {
+private:
+    float x, y, base, height;
+public:
+    Triangle(Renderer& r, float x, float y, float base, float height)
+        : Shape(r), x(x), y(y), base(base), height(height) {}
+
+    void draw() override {
+        renderer.renderTriangle(x, y, base, height);
+    }
+};
 
 // ------------------------------------------------------------
-// 6. Example usage
+// WHY BRIDGE MATTERS
+// ------------------------------------------------------------
+// - Avoids class explosion (ShapeType × RendererType)
+// - Lets you add new shapes without touching renderers
+// - Lets you add new renderers without touching shapes
+// - Enables runtime switching of implementations
+// - Used in graphics engines, UI toolkits, OS abstraction layers
+
+// ------------------------------------------------------------
+// EXAMPLE USAGE
 // ------------------------------------------------------------
 int main() {
     RasterRenderer raster;
     VectorRenderer vector;
 
-    Circle c1(raster, 5, 5, 2);
-    Square s1(vector, 10, 10, 4);
+    Circle c(raster, 5, 5, 3);
+    Square s(vector, 10, 10, 4);
+    Triangle t(raster, 0, 0, 6, 3);
 
-    c1.draw();
-    s1.draw();
+    c.draw();
+    s.draw();
+    t.draw();
+
+    // Runtime switching
+    Shape* dynamicShape = new Circle(vector, 20, 20, 10);
+    dynamicShape->draw();
+    delete dynamicShape;
 
     return 0;
 }
