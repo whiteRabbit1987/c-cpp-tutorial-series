@@ -1,7 +1,7 @@
 #include <iostream>
 
 // decorator pattern      =   attach additional responsibilities to an object dynamically
-//                           provides a flexible alternative to subclassing for extending behavior
+//                            provides a flexible alternative to subclassing for extending behavior
 // component              =   defines the interface for objects that can have responsibilities added
 // concrete component     =   the original object being wrapped
 // decorator              =   wraps a component and adds behavior before/after delegating

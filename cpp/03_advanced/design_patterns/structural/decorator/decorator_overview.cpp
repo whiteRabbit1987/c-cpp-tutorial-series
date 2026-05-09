@@ -3,7 +3,7 @@
 #include <memory>
 
 // decorator pattern              =   dynamically add behavior to objects without modifying their code
-//                                   avoids subclass explosion by using composition instead of inheritance
+//                                    avoids subclass explosion by using composition instead of inheritance
 // component                      =   base interface for all objects that can be decorated
 // concrete component             =   the core object receiving added behavior
 // decorator                      =   abstract wrapper that forwards requests to the wrapped object
