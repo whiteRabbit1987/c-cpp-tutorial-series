@@ -2,7 +2,7 @@
 #include <string>
 
 // facade pattern                  =   provide a unified, simplified interface to a complex subsystem
-//                                     hides internal details and reduces dependency on subsystem classes
+//                                   hides internal details and reduces dependency on subsystem classes
 // subsystem complexity            =   many classes, many steps, strict ordering, error handling
 // facade role                     =   orchestrates subsystem calls in correct order
 // client benefit                  =   interacts with one simple object instead of many
