@@ -130,3 +130,9 @@ int main() {
 
     return 0;
 }
+// use case examples        =   graphics engines (separate shapes from renderers)
+//                             UI toolkits (widgets separated from platform backends)
+//                             device drivers (abstraction layer over hardware APIs)
+//                             cross‑platform libraries (logic separated from OS implementation)
+//                             game engines (rendering abstraction over DirectX/OpenGL/Vulkan)
+//                             enterprise apps (separate business rules from data providers)

@@ -77,3 +77,9 @@ int main() {
 
     return 0;
 }
+// use case examples        =   integrating legacy systems (old APIs wrapped for new code)
+//                             third‑party libraries (incompatible interfaces adapted to your own)
+//                             GUI frameworks (adapting event systems or widgets)
+//                             file format converters (old reader adapted to new parser)
+//                             hardware abstraction (different device APIs unified)
+//                             game engines (adapting old asset loaders to new pipelines)

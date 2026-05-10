@@ -112,3 +112,9 @@ int main() {
     root->display();
     return 0;
 }
+// use case examples        =   file systems (folders containing files and subfolders)
+//                             UI hierarchies (widgets containing child widgets)
+//                             scene graphs (nodes containing meshes, lights, cameras)
+//                             document structures (paragraphs, lines, characters)
+//                             game entities (groups of objects treated as one)
+//                             graphics editors (shapes grouped into larger shapes)

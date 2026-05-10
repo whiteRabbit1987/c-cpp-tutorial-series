@@ -108,3 +108,9 @@ int main() {
 
     return 0;
 }
+// use case examples        =   I/O streams (filters for compression, encryption, buffering)
+//                             UI widgets (add borders, shadows, scrollbars dynamically)
+//                             logging wrappers (add logging around existing objects)
+//                             formatting pipelines (uppercase, trimming, markup layers)
+//                             game abilities (stackable buffs, effects, modifiers)
+//                             network layers (add retry, caching, throttling behaviors)

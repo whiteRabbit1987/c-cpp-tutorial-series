@@ -115,3 +115,11 @@ int main() {
     delete real;
     return 0;
 }
+
+// use case examples        =   game engines (lazy loading, caching)
+//                              enterprise apps (access control, permissions)
+//                              operating systems (resource proxies, file access)
+//                              distributed systems (remote proxies, RPC stubs)
+//                              media players (load heavy assets on demand)
+//                              UI frameworks (defer widget creation)
+//                              database layers (query caching, security wrappers)
