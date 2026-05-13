@@ -4,37 +4,37 @@
 #include <unistd.h>
 
 // intro = a process is an executing program
-//                      has its own memory space
-//                      contains one or more threads
+//                      owns its own virtual address space
+//                      contains one or more threads of execution
 
-// intro = a thread is an independent path of execution
+// intro = a thread is an independent execution path
 //                      created inside a process
 //                      shares memory with other threads
-//                      managed by the operating system
+//                      scheduled by the operating system
 
-// intro = threads allow concurrency
-//                      multiple tasks appear to run at once
-//                      scheduler rapidly switches between them
-
-// intro = this example shows
+// intro = this example demonstrates
 //                      process ID vs thread ID
 //                      creating threads
-//                      joining threads to wait for completion
+//                      observing concurrent execution
 
-void cpu_waster() {
-    printf("CPU Waster Process ID: %d\n", getpid());
-    printf("CPU Waster Thread ID: %zu\n", std::hash<std::thread::id>{}(std::this_thread::get_id()));
-    while (true) { /* waste CPU cycles */ }
+void busy_worker() {
+    printf("Worker running in process %d\n", getpid());
+    printf("Worker thread ID: %zu\n",
+           std::hash<std::thread::id>{}(std::this_thread::get_id()));
+
+    // simulate CPU‑bound work
+    while (true) { /* burn cycles */ }
 }
 
 int main() {
-    printf("Main Process ID: %d\n", getpid());
-    printf("Main Thread ID: %zu\n", std::hash<std::thread::id>{}(std::this_thread::get_id()));
+    printf("Main process ID: %d\n", getpid());
+    printf("Main thread ID: %zu\n",
+           std::hash<std::thread::id>{}(std::this_thread::get_id()));
 
-    std::thread t1(cpu_waster);
-    std::thread t2(cpu_waster);
+    std::thread w1(busy_worker);
+    std::thread w2(busy_worker);
 
-    // keep main thread alive
+    // keep main alive while workers run
     while (true) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }

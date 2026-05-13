@@ -3,44 +3,44 @@
 #include <chrono>
 
 // overview = threads run concurrently
-//                      scheduler time‑slices CPU among runnable threads
-//                      rapid switching creates illusion of parallelism
+//                      OS rapidly switches between runnable threads
+//                      creates illusion of parallelism on a single core
 
-// overview = thread lifecycle
-//                      NEW        (constructed but not running)
-//                      RUNNABLE   (eligible for CPU scheduling)
+// overview = thread lifecycle states
+//                      NEW        (constructed, not yet running)
+//                      RUNNABLE   (eligible for CPU time)
 //                      BLOCKED    (waiting for I/O or event)
 //                      TERMINATED (finished execution)
 
-// overview = join() waits for a thread to finish
-//                      detach() lets a thread run independently
+// overview = join() blocks until a thread finishes
+//                      detach() allows a thread to run independently
 //                      joinable() checks if a thread can be joined
 
-// overview = this file demonstrates
+// overview = this demonstration shows
 //                      thread creation
-//                      joinable() state transitions
-//                      blocking the main thread until child finishes
+//                      joinable() transitions
+//                      waiting for a worker thread to finish
 
-void chef_olivia() {
-    printf("Olivia started & waiting for sausage to thaw...\n");
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-    printf("Olivia is done cutting sausage.\n");
+void slow_task() {
+    printf("Worker: starting long task...\n");
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    printf("Worker: task complete.\n");
 }
 
 int main() {
-    printf("Barron requests Olivia's help.\n");
+    printf("Main: launching worker thread.\n");
 
-    std::thread olivia(chef_olivia);
-    printf("  Olivia joinable? %s\n", olivia.joinable() ? "true" : "false");
+    std::thread worker(slow_task);
+    printf("  worker joinable? %s\n", worker.joinable() ? "true" : "false");
 
-    printf("Barron continues cooking soup...\n");
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    printf("  Olivia joinable? %s\n", olivia.joinable() ? "true" : "false");
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    printf("Main: doing other work...\n");
+    printf("  worker joinable? %s\n", worker.joinable() ? "true" : "false");
 
-    printf("Barron waits for Olivia to finish...\n");
-    olivia.join();
-    printf("  Olivia joinable? %s\n", olivia.joinable() ? "true" : "false");
+    printf("Main: waiting for worker to finish.\n");
+    worker.join();
+    printf("  worker joinable? %s\n", worker.joinable() ? "true" : "false");
 
-    printf("Barron and Olivia are both done!\n");
+    printf("Main: all work complete.\n");
     return 0;
 }
