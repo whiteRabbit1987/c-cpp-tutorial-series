@@ -88,4 +88,3 @@ A **reader-writer lock** allows multiple threads to read shared data simultaneou
 - Use reader-writer locks when reads dominate.
 - Use a standard mutex when writes are frequent.
 - Consider application-specific access patterns before choosing a lock type.
-in
