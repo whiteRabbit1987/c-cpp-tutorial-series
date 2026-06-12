@@ -90,3 +90,109 @@ int main() {
 
     return 0;
 }
+/**
+ * Designing Parallel Programs — Intro
+ *
+ * This file introduces the four major stages of designing a parallel program:
+ *
+ *   1. Partitioning       — Break the problem into tasks
+ *   2. Communication      — Determine how tasks exchange data
+ *   3. Agglomeration      — Combine tasks to reduce overhead
+ *   4. Mapping            — Assign tasks to processors
+ *
+ * These stages form a structured workflow for building scalable,
+ * efficient parallel algorithms.
+ *
+ * This intro demonstrates small, simple examples of each idea.
+ */
+
+#include <iostream>
+#include <thread>
+#include <vector>
+#include <mutex>
+#include <chrono>
+
+// ------------------------------------------------------------
+// 1. PARTITIONING (Domain + Functional)
+// ------------------------------------------------------------
+
+void chop_item(int id) {
+    printf("Chopping item %d\n", id);
+}
+
+void partitioning_demo() {
+    // Domain decomposition: split data into independent chunks
+    std::thread t1(chop_item, 0);
+    std::thread t2(chop_item, 1);
+
+    // Functional decomposition: separate stages of work
+    printf("Mixing ingredients\n");
+    printf("Cooking\n");
+    printf("Plating\n");
+
+    t1.join();
+    t2.join();
+}
+
+// ------------------------------------------------------------
+// 2. COMMUNICATION (simple shared state)
+// ------------------------------------------------------------
+
+std::mutex mtx;
+int shared_values[4];
+
+void communication_task(int id) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    std::scoped_lock lock(mtx);
+    shared_values[id] = id * 10;
+}
+
+void communication_demo() {
+    std::vector<std::thread> threads;
+    for (int i = 0; i < 4; i++) {
+        threads.emplace_back(communication_task, i);
+    }
+    for (auto& t : threads) t.join();
+}
+
+// ------------------------------------------------------------
+// 3. AGGLOMERATION (combine tasks)
+// ------------------------------------------------------------
+
+void process_block(int start, int end) {
+    for (int i = start; i < end; i++) {
+        printf("Processing item %d\n", i);
+    }
+}
+
+void agglomeration_demo() {
+    // Instead of many tiny tasks → combine into two medium tasks
+    std::thread t1(process_block, 0, 5);
+    std::thread t2(process_block, 5, 10);
+    t1.join();
+    t2.join();
+}
+
+// ------------------------------------------------------------
+// 4. MAPPING (conceptual only)
+// ------------------------------------------------------------
+
+void mapping_demo() {
+    printf("Mapping tasks to processors (conceptual)\n");
+    printf(" - Increase concurrency by separating independent tasks\n");
+    printf(" - Improve locality by grouping communicating tasks\n");
+}
+
+// ------------------------------------------------------------
+// MAIN
+// ------------------------------------------------------------
+
+int main() {
+
+    partitioning_demo();
+    communication_demo();
+    agglomeration_demo();
+    mapping_demo();
+
+    return 0;
+}
