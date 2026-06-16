@@ -1,12 +1,13 @@
+#include <iostream>
+#include <list>
+#include <string>
+
+
 // list_route_navigation.cpp
 // purpose               = demonstrate list iteration, wrap-around navigation, and stateful iterator usage
 // container             = std::list<std::string> for ordered stops
 // iterator behavior     = ++it and --it with wrap-around at begin()/end()
 // best practice         = initialize iterator only when first element is added
-
-#include <iostream>
-#include <list>
-#include <string>
 
 typedef std::list<std::string> stops_t;
 typedef std::string stop_t;
